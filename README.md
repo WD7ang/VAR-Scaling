@@ -31,20 +31,34 @@ We address the critical challenge of discrete latent spaces that prohibit contin
 
 ## 💡 Methodology & Analysis
 
-We observe that VAR scales exhibit two distinct pattern types: **general patterns** (early stages) and **specific patterns** (later stages).
+### 1. Pattern Evolution: General vs. Specific
+Our approach is grounded in the observation that VAR's multi-scale generation process exhibits two distinct phases. Inspired by the in-depth analysis in **[Why Next-Scale Prediction Outperforms Diffusion Models?](https://zhouyifan.net/2024/12/21/20241218-VAR/)** by Yifan Zhou, we categorize these into:
 
-### Density Analysis
-Through extensive experiments, we explored the correlation between sample density in the quasi-continuous space and generation quality.
+*   **General Patterns (Scales 0-1):** Define the global spatial structure, contours, and semantics.
+*   **Specific Patterns (Scales 2-9):** Progressively refine local details, textures, and edges.
+
+<div align="center">
+  <img src="assets/patterns.png" width="90%">
+  <p><em>Figure 2: Visualization of Pattern Evolution. Scales 0-1 establish the foundational "General Patterns," while subsequent scales (2-9) fill in the "Specific Patterns." Our scaling strategy is designed to optimize these critical transition points.</em></p>
+</div>
+
+### 2. Density Analysis
+To determine the optimal sampling strategy for these patterns, we explored the correlation between sample density in the quasi-continuous space and generation quality.
 
 <div align="center">
   <img src="assets/explore.png" width="70%">
-  <p><em>Figure 2: Experimental analysis of sample density. We find that high-density regions correspond to high-quality representative prototypes (general patterns), whereas low-density samples often result in outliers or diverse variations.</em></p>
+  <p><em>Figure 3: Experimental analysis of sample density. We find that high-density regions correspond to high-quality representative prototypes (ideal for General Patterns), whereas low-density samples often result in outliers or diverse variations.</em></p>
 </div>
 
-**VAR-Scaling Strategy:**
-1.  **Map** discrete samples to a quasi-continuous space using KDE.
+### 3. VAR-Scaling Strategy
+Based on these findings, we propose a density-adaptive framework:
+1.  **Map** discrete samples to a quasi-continuous space using Kernel Density Estimation (KDE).
 2.  **Identify** high-density regions as representative prototypes.
-3.  **Apply** Top-k sampling for high-density regions (quality) and Random-k for low-density regions (diversity).
+3.  **Apply** Hybrid Sampling:
+    *   **Top-k** for high-density regions (to preserve quality/structure).
+    *   **Random-k** for low-density regions (to maintain diversity).
+
+    
 
 ## 🚀 News
 - **[2026.01.16]** Code released! Support for both **Infinity** and **VAR** baselines.
