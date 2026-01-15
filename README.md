@@ -25,7 +25,7 @@ While inference-time scaling has significantly enhanced generative quality in la
 We address the critical challenge of discrete latent spaces that prohibit continuous path search by mapping sampling spaces to quasi-continuous feature spaces via kernel density estimation (KDE). Our method employs a density-adaptive hybrid sampling strategy to optimize sample fidelity at critical scales.
 
 <div align="center">
-  <img src="assets/motivation.png" width="90%">
+  <img src="assets/motivation.png" width="70%">
   <p><em>Figure 1: Comparison with Diffusion Models. While diffusion models enable metric-guided continuous search, VQ's discrete nature prevents this. Our KDE mapping transforms probability-scaled sampling spaces into continuous trajectories.</em></p>
 </div>
 
@@ -37,7 +37,7 @@ We observe that VAR scales exhibit two distinct pattern types: **general pattern
 Through extensive experiments, we explored the correlation between sample density in the quasi-continuous space and generation quality.
 
 <div align="center">
-  <img src="assets/density_analysis.png" width="90%">
+  <img src="assets/explore.png" width="70%">
   <p><em>Figure 2: Experimental analysis of sample density. We find that high-density regions correspond to high-quality representative prototypes (general patterns), whereas low-density samples often result in outliers or diverse variations.</em></p>
 </div>
 
