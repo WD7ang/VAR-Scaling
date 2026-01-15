@@ -8,7 +8,7 @@
 
 **Weidong Tang, Xinyan Wan, Siyu Li, and Xiumei Wang**
 
-*School of Electronic Engineering, Xidian University*
+*Xidian University*
 
 </div>
 
@@ -20,9 +20,7 @@
 
 ## 📖 Abstract
 
-While inference-time scaling has significantly enhanced generative quality in large language and diffusion models, its application to vector-quantized (VQ) visual autoregressive modeling (VAR) remains unexplored. We introduce **VAR-Scaling**, the first general framework for inference-time scaling in VAR.
-
-We address the critical challenge of discrete latent spaces that prohibit continuous path search by mapping sampling spaces to quasi-continuous feature spaces via kernel density estimation (KDE). Our method employs a density-adaptive hybrid sampling strategy to optimize sample fidelity at critical scales.
+While inference-time scaling has significantly enhanced generative quality in large language and diffusion models, its application to vector-quantized (VQ) visual autoregressive modeling (VAR) remains unexplored. We introduce VAR-Scaling, the first general framewor for inference-time scaling in VAR, addressing the critical challenge of discrete latent spaces that prohibit continuous path search. We find that VAR scales exhibit two distinct pattern types: general patterns and specific patterns, where later-stage specific patterns conditionally optimize early-stage general patterns. To overcome the discrete latent space barrier in VQ models, we map sampling spaces to quasi-continuous feature spaces via kernel density estimation (KDE), where high-density samples approximate stable, high-quality solutions. This transformation enables effective navigation of sampling distributions. We propose a density adaptive hybrid sampling strategy: Top-k sampling focuses on high-density regions to preserve quality near distribution modes, while Random-k sampling explores low-density areas to maintain diversity and prevent premature convergence. Consequently, VAR-Scaling optimizes sample fidelity at critical scales to enhance output quality. Experiments in class-conditional and text-to-image evaluations demonstrate signifcant improvements in inference process.
 
 <div align="center">
   <img src="assets/motivation.png" width="70%">
