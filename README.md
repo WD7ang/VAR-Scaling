@@ -38,7 +38,7 @@ Our approach is grounded in the observation that VAR's multi-scale generation pr
 *   **Specific Patterns (Scales 2-9):** Progressively refine local details, textures, and edges.
 
 <div align="center">
-  <img src="assets/patterns.png" width="90%">
+  <img src="assets/patterns.png" width="70%">
   <p><em>Figure 2: Visualization of Pattern Evolution. Scales 0-1 establish the foundational "General Patterns," while subsequent scales (2-9) fill in the "Specific Patterns." Our scaling strategy is designed to optimize these critical transition points.</em></p>
 </div>
 
@@ -61,7 +61,7 @@ Based on these findings, we propose a density-adaptive framework:
     
 
 ## 🚀 News
-- **[2026.01.16]** Code released! Support for both **Infinity** and **VAR** baselines.
+- **[2026.01.16]** Code released! Support for both **VAR** and **Infinity** baselines.
 - **[2025.08.23]** Paper accepted to **PRCV 2025**!
 
 ## 📂 Repository Structure
@@ -96,3 +96,80 @@ cd Infinity
 
 # Run the evaluation script with VAR-Scaling enabled
 bash eval.sh
+```
+
+
+
+**Configuration:**
+The `eval.sh` script is pre-configured with the best parameters:
+```bash
+# === VAR-Scaling Parameters ===
+ENABLE_SCALING=1          # Enable VAR-Scaling
+SCALING_LAYER_IDX=3       # Apply search at the critical layer (Scale 3)
+SCALING_NUM_SAMPLES=3000  # Number of candidates for density estimation
+```
+
+### 2. VAR (Class-Conditional)
+
+For the original VAR model (ImageNet generation), use the provided `run.py` script.
+
+**Step 1: Prepare Checkpoints**
+Ensure you have the ImageNet checkpoints (`var_d30.pth`, `vae_ch160.pth`).
+
+**Step 2: Run Inference**
+
+```bash
+cd VAR
+
+python run.py \
+  --vae_ckpt path/to/vae_ch160.pth \
+  --var_ckpt path/to/var_d30.pth \
+  --output_dir ./output_images \
+  --model_depth 30 \
+  --enable_scaling \
+  --scaling_scale 1 \
+  --scaling_samples 50 \
+  --scaling_alpha 2.3
+```
+
+**Key Parameters:**
+*   `--enable_scaling`: Activates the scaling strategy.
+*   `--scaling_scale`: The specific scale index to apply scaling (Scale 1 is recommended for VAR).
+*   `--scaling_alpha`: Density threshold coefficient.
+
+## 📊 Results
+
+### Quantitative Results
+VAR-Scaling achieves significant improvements in **FID**, **IS**, and **GenEval** scores across different scales compared to baseline strategies (Random-k, Top-k).
+
+<div align="center">
+  <img src="assets/results_curves.png" width="80%">
+  <p><em>Figure 4: FID and IS scores on ImageNet-50k. VAR-Scaling (Purple line) achieves the best trade-off between quality and diversity.</em></p>
+</div>
+<br>
+<div align="center">
+  <img src="assets/geneval_curve.png" width="50%">
+  <p><em>Figure 5: GenEval improvement on Infinity model with scaling samples.</em></p>
+</div>
+
+## 🔗 Citation
+
+If you find our work helpful, please cite:
+
+```bibtex
+@inproceedings{tang2025inference,
+  title={Inference-Time Scaling for Visual AutoRegressive modeling by Searching Representative Samples},
+  author={Tang, Weidong and Wan, Xinyan and Li, Siyu and Wang, Xiumei},
+  booktitle={Pattern Recognition and Computer Vision (PRCV)},
+  year={2025},
+  publisher={Springer},
+  note={arXiv:2601.07293}
+}
+```
+
+## 🙏 Acknowledgments
+
+This codebase is built upon [Infinity](https://github.com/FoundationVision/Infinity) and [VAR](https://github.com/FoundationVision/VAR). We thank the authors for their outstanding open-source contributions.
+
+The analysis of General vs. Specific patterns in VAR was inspired by:
+- Yifan Zhou. (2024). *NIPS 2024 Best Paper VAR In-Depth Analysis: Why Next-Scale Prediction Outperforms Diffusion Models?*. [Blog Post](https://zhouyifan.net/2024/12/21/20241218-VAR/).
