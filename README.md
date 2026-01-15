@@ -38,7 +38,7 @@ Our approach is grounded in the observation that VAR's multi-scale generation pr
 *   **Specific Patterns (Scales 2-9):** Progressively refine local details, textures, and edges.
 
 <div align="center">
-  <img src="assets/patterns.png" width="70%">
+  <img src="assets/patterns.png" width="50%">
   <p><em>Figure 2: Visualization of Pattern Evolution. Scales 0-1 establish the foundational "General Patterns," while subsequent scales (2-9) fill in the "Specific Patterns." Our scaling strategy is designed to optimize these critical transition points.</em></p>
 </div>
 
@@ -68,8 +68,8 @@ Based on these findings, we propose a density-adaptive framework:
 
 This repository contains the official implementation of VAR-Scaling applied to two strong baselines:
 
-*   **[Infinity](./Infinity)**: Implementation on the high-resolution Infinity model (Text-to-Image).
 *   **[VAR](./VAR)**: Implementation on the original VAR model (Class-Conditional, ImageNet).
+*   **[Infinity](./Infinity)**: Implementation on the high-resolution Infinity model (Text-to-Image).
 
 ## 🛠️ Installation
 
@@ -82,34 +82,7 @@ Once you have set up the environment for the base model, simply navigate to the 
 
 ## ⚡ Usage
 
-### 1. Infinity (Text-to-Image)
-
-We provide a comprehensive script `eval.sh` to reproduce our results on the Infinity model.
-
-**Step 1: Prepare Weights**
-Download the required weights (`infinity_2b_reg.pth`, `infinity_vae_d32reg.pth`, `flan-t5-xl`) and place them in `Infinity/weights/`.
-
-**Step 2: Run Inference**
-
-```bash
-cd Infinity
-
-# Run the evaluation script with VAR-Scaling enabled
-bash eval.sh
-```
-
-
-
-**Configuration:**
-The `eval.sh` script is pre-configured with the best parameters:
-```bash
-# === VAR-Scaling Parameters ===
-ENABLE_SCALING=1          # Enable VAR-Scaling
-SCALING_LAYER_IDX=3       # Apply search at the critical layer (Scale 3)
-SCALING_NUM_SAMPLES=3000  # Number of candidates for density estimation
-```
-
-### 2. VAR (Class-Conditional)
+### 1. VAR (Class-Conditional)
 
 For the original VAR model (ImageNet generation), use the provided `run.py` script.
 
@@ -136,6 +109,33 @@ python run.py \
 *   `--enable_scaling`: Activates the scaling strategy.
 *   `--scaling_scale`: The specific scale index to apply scaling (Scale 1 is recommended for VAR).
 *   `--scaling_alpha`: Density threshold coefficient.
+
+
+### 2. Infinity (Text-to-Image)
+
+We provide a comprehensive script `eval.sh` to reproduce our results on the Infinity model.
+
+**Step 1: Prepare Weights**
+Download the required weights (`infinity_2b_reg.pth`, `infinity_vae_d32reg.pth`, `flan-t5-xl`) and place them in `Infinity/weights/`.
+
+**Step 2: Run Inference**
+
+```bash
+cd Infinity
+
+# Run the evaluation script with VAR-Scaling enabled
+bash eval.sh
+```
+
+**Configuration:**
+The `eval.sh` script is pre-configured with the best parameters:
+```bash
+# === VAR-Scaling Parameters ===
+ENABLE_SCALING=1          # Enable VAR-Scaling
+SCALING_LAYER_IDX=3       # Apply search at the critical layer (Scale 3)
+SCALING_NUM_SAMPLES=3000  # Number of candidates for density estimation
+```
+
 
 ## 📊 Results
 
@@ -169,7 +169,7 @@ If you find our work helpful, please cite:
 
 ## 🙏 Acknowledgments
 
-This codebase is built upon [Infinity](https://github.com/FoundationVision/Infinity) and [VAR](https://github.com/FoundationVision/VAR). We thank the authors for their outstanding open-source contributions.
+This codebase is built upon [VAR](https://github.com/FoundationVision/VAR) and [Infinity](https://github.com/FoundationVision/Infinity). We thank the authors for their outstanding open-source contributions.
 
 The analysis of General vs. Specific patterns in VAR was inspired by:
 - Yifan Zhou. (2024). *NIPS 2024 Best Paper VAR In-Depth Analysis: Why Next-Scale Prediction Outperforms Diffusion Models?*. [Blog Post](https://zhouyifan.net/2024/12/21/20241218-VAR/).
