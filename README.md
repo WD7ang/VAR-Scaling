@@ -90,7 +90,7 @@ Ensure you have the ImageNet checkpoints (`var_d30.pth`, `vae_ch160.pth`).
 **Step 2: Run Inference**
 
 ```bash
-cd VAR
+cd VAR-main
 
 python run.py \
   --vae_ckpt path/to/vae_ch160.pth \
@@ -119,7 +119,7 @@ Download the required weights (`infinity_2b_reg.pth`, `infinity_vae_d32reg.pth`,
 **Step 2: Run Inference**
 
 ```bash
-cd Infinity
+cd Infinity-main/scripts
 
 # Run the evaluation script with VAR-Scaling enabled
 bash eval.sh
